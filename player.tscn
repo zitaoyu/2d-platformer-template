@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvuojvof7i63l"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_x27b3"]
+[ext_resource type="Texture2D" uid="uid://bc3e5fst1cvll" path="res://assets/tilemap-characters_packed.png" id="2_tf0us"]
+[ext_resource type="AudioStream" uid="uid://c407vo5nbm1uy" path="res://audio/mixkit-arcade-game-jump-coin-216.wav" id="3_madh2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65l8q"]
+atlas = ExtResource("2_tf0us")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v23kq"]
+atlas = ExtResource("2_tf0us")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wk2li"]
+atlas = ExtResource("2_tf0us")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ce317"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65l8q")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v23kq")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v23kq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wk2li")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxgw6"]
+size = Vector2(14, 18)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_x27b3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ce317")
+animation = &"jump"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_mxgw6")
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_madh2")
